@@ -15,3 +15,8 @@ from keras.layers import Input, Conv2D, MaxPooling2D, Flatten, Dense, Dropout, L
 print(f"TensorFlow Version: {tf.__version__}")
 print(f"Keras Version: {keras.__version__}")
 
+
+
+# Step 1: data processing
+# define image shape and channel and batch size
+image_width, image_height, image_channel, batch_size = 500, 500, 3, 16;
