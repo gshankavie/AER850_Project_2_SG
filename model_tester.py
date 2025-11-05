@@ -12,3 +12,26 @@ testImagePaths = [
 
 classes = ['crack', 'missing-head', 'paint-off']
 
+
+for img_path in testImagePaths:
+    img = image.load_img(img_path, target_size=(500, 500))
+    img_array = image.img_to_array(img) / 255.0
+    img_array = np.expand_dims(img_array, axis=0) 
+
+
+    # predict the class
+    predictions = DCNN_model.predict(img_array)
+    predicted_class = np.argmax(predictions)  # find the class with highest probability
+    confidence = predictions[0][predicted_class]
+
+
+    # display result
+    print(f"Image: {img_path}")
+    print(f"Predicted classification: {classes[predicted_class]} with confidence {confidence:.2f}")
+
+
+    # display image with the prediction
+    plt.imshow(img)
+    plt.title(f"Predicted classification: {classes[predicted_class]} ({confidence:.2f})")
+    plt.axis('off')
+    plt.show() 
