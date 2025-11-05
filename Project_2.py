@@ -42,3 +42,26 @@ valid_gen = valid_data_aug.flow_from_directory(
     batch_size=batch_size,
     class_mode='categorical'
     )
+
+
+# Step 2
+DCNNmodel = Sequential()
+DCNNmodel.add(Conv2D(16, (3, 3), strides=(1, 1), activation='relu',input_shape=(image_width, image_height, image_channel)))
+DCNNmodel.add(MaxPooling2D(pool_size=(2, 2)))
+DCNNmodel.add(Conv2D(32, (3, 3), strides=(1, 1), activation='relu'))
+DCNNmodel.add(MaxPooling2D(pool_size=(2, 2)))
+DCNNmodel.add(Conv2D(64, (3, 3), strides=(1, 1), activation='relu'))
+DCNNmodel.add(MaxPooling2D(pool_size=(2, 2)))
+
+DCNNmodel.add(Flatten()),
+DCNNmodel.add(Dense(128, activation = 'relu')), 
+DCNNmodel.add(Dense(32, activation = 'relu'))
+DCNNmodel.add(Dropout(0.1))
+DCNNmodel.add(Dense(3, activation = 'softmax')) 
+
+print(DCNNmodel.summary())
+
+
+# Step 3
+learning_rate = 1e-4
+DCNNmodel.compile(loss='categorical_crossentropy', optimizer=Adam(learning_rate=learning_rate), metrics=['accuracy'])
