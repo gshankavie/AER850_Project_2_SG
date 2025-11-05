@@ -1,29 +1,17 @@
-# %%
-import sys
-import numpy as np
-#import pandas as pd
-#print("hello")
 import tensorflow as tf
 from tensorflow import keras
 import matplotlib.pyplot as plt
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.preprocessing import image_dataset_from_directory
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.optimizers import Adam
 from keras.models import Sequential
-from keras.layers import Input, Conv2D, MaxPooling2D, Flatten, Dense, Dropout, LeakyReLU
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 
 
-# %%
+# Step 1
+image_width, image_height, image_channel, batch_size = 500, 500, 3, 32;
 
-
-
-# Step 1: data processing
-# define image shape and channel and batch size
-image_width, image_height, image_channel, batch_size = 500, 500, 3, 16;
-
-# %%
-# define image data directories
+# image data
 training_data = r"Data\train"
 validation_data = r"Data\valid"
 
