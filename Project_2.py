@@ -15,11 +15,30 @@ image_width, image_height, image_channel, batch_size = 500, 500, 3, 32;
 training_data = r"Data\train"
 validation_data = r"Data\valid"
 
-# create training data image augmentation object
+# image augmentation
 train_data_aug = ImageDataGenerator(
     rescale = 1./255,
     shear_range = 0.2,
     zoom_range = 0.2,
-    #rotation_range = 40,
-    #horizontal_flip = True
+    rotation_range = 20.0,
+    horizontal_flip = True
+    )
+    
+valid_data_aug = ImageDataGenerator(
+    rescale = 1./255
+    )
+
+# generators
+train_gen = train_data_aug.flow_from_directory(
+    training_data,
+    target_size=(image_width, image_height),
+    batch_size=batch_size,
+    class_mode='categorical'  
+    )
+
+valid_gen = valid_data_aug.flow_from_directory(
+    validation_data,
+    target_size=(image_width, image_height),
+    batch_size=batch_size,
+    class_mode='categorical'
     )
