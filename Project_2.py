@@ -65,3 +65,43 @@ print(DCNNmodel.summary())
 # Step 3
 learning_rate = 1e-4
 DCNNmodel.compile(loss='categorical_crossentropy', optimizer=Adam(learning_rate=learning_rate), metrics=['accuracy'])
+
+
+
+# Step 4: Model Evaluation
+# early stopping criteria
+early_stopping = EarlyStopping(
+    monitor='val_loss',
+    patience=6,
+    mode='min',
+    restore_best_weights=True
+    )
+
+CNNhistory = DCNNmodel.fit(x=train_gen, validation_data=valid_gen, epochs=15, steps_per_epoch=len(train_gen), validation_steps=len(valid_gen), callbacks=[early_stopping])
+
+
+
+# plotting
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1)
+plt.plot(CNNhistory.history['accuracy'], label='Training Accuracy')
+plt.plot(CNNhistory.history['val_accuracy'], label='Validation Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.title('Training and Validation Accuracy for DCNN Model over Epochs')
+plt.legend(['Train', 'Validation'], loc='upper left')
+plt.show()
+
+
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1)
+plt.plot(CNNhistory.history['loss'], label='Training Loss') 
+plt.plot(CNNhistory.history['val_loss'], label='Validation Loss') 
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.title('Training and Validation Loss for DCNN Model over Epochs')
+plt.legend(['Train', 'Validation'], loc='upper left')
+plt.show()
+
+
+DCNNmodel.save('DCNN_model.h5')
